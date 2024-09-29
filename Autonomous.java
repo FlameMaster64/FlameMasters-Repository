@@ -1,54 +1,73 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
-@Autonomous (name = "AbubakarHassanEncoder")
+@Autonomous
 
-public class AbubakarHassanEncoder extends LinearOpMode{
-    
-    private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor frontleftDrive = null;
-    private DcMotor frontrightDrive = null;
-    private DcMotor backleftDrive = null;
-    private DcMotor backrightDrive = null;
+public class OmarCompition extends LinearOpMode {
+    DcMotor fl = null;
+    DcMotor fr = null;
+    DcMotor bl = null;
+    DcMotor br = null;
     
     @Override
-    public void runOpMode(){
+    public void runOpMode() {
         
-        frontleftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontrightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backleftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backrightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            
+        fl  = hardwareMap.get(DcMotor.class, "fl");
+        fr = hardwareMap.get(DcMotor.class, "fr");
+        bl  = hardwareMap.get(DcMotor.class, "bl");
+        br = hardwareMap.get(DcMotor.class, "br");
         
-        frontleftDrive.setTargetPosition(1000);
-        frontrightDrive.setTargetPosition(1000);
-        backleftDrive.setTargetPosition(1000);
-        backrightDrive.setTargetPosition(1000);
+        fr.setDirection(DcMotor.Direction.REVERSE);
+        bl.setDirection(DcMotor.Direction.FORWARD);
+        fl.setDirection(DcMotor.Direction.FORWARD);
+        br.setDirection(DcMotor.Direction.REVERSE);
         
-        frontleftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontrightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backleftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backrightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        fl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        fr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        br.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         
         
         
-         while (opModeIsActive()) {
-             
-             frontleftDrive.setPower(0.5);
-             frontrightDrive.setPower(0.5);
-             backleftDrive.setPower(0.5);
-             backrightDrive.setPower(0.5);
-             
-             
-             
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.update();
-        }
+        fl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        fr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        br.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        
+        waitForStart();
+        
     }
-}
+    
+     public void move(int lTarget, int rTarget, double speed){
+         bl.setTargetPosition(lTarget);
+         fl.setTargetPosition(lTarget);
+         br.setTargetPosition(rTarget);
+         fr.setTargetPosition(rTarget);
+         
+         
+         fl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+         fr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+         bl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+         br.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+         
+        fl.setPower(speed);
+         fr.setPower(speed);
+         bl.setPower(speed);
+         br.setPower(speed);
+         
+         while (opModeIsActive() && (fl.isBusy() || bl.isBusy() || br.isBusy())){
+             telemetry.addData("fr position", fr.getCurrentPosition());
+             telemetry.addData("br position", br.getCurrentPosition());
+             telemetry.addData("fl position", fl.getCurrentPosition());
+             telemetry.addData("bl position", bl.getCurrentPosition());
+             telemetry.update();
+             idle();
+         }
+         fr.setPower(0);
+         
+     }
+ }
