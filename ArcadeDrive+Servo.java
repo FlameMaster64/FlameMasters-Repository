@@ -94,7 +94,7 @@ public class OmarArcadeMode extends LinearOpMode {
             flpower = drive + turn + strafe;
             blpower = drive + turn - strafe;
             
-            double maxPower = Math.max(+-       Math.abs(frpower),Math.max(Math.abs(brpower),Math.max(Math.abs(flpower), Math.abs(blpower))));
+            double maxPower = Math.max(+-Math.abs(frpower),Math.max(Math.abs(brpower),Math.max(Math.abs(flpower), Math.abs(blpower))));
             if(maxPower > 1){
                 frpower /= maxPower;
                 brpower /= maxPower;
