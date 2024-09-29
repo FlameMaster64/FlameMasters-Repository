@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous
 
@@ -11,6 +12,14 @@ public class OmarCompition extends LinearOpMode {
     DcMotor fr = null;
     DcMotor bl = null;
     DcMotor br = null;
+    
+    double kp = 0.5;
+    double ki = 0.5;
+    double kd = 0.5;
+    
+    double integral = 0;
+    
+    ElapsedTime elapsedTime = new ElapsedTime();
     
     @Override
     public void runOpMode() {
@@ -39,6 +48,22 @@ public class OmarCompition extends LinearOpMode {
         br.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         
         waitForStart();
+        
+        move(1000, 1000, 0.5);
+        
+        // move(-500, 500, 0.2);
+        
+        // move(1000, 1000, 0.2);
+        
+        // move(0, 250, 0.2);
+        
+        // move(500, 500, 0.2);
+        // //reverse everthing to go back home
+        // move(-500, -500, 0.2);
+        // move(250, -250, 0.2);
+        // move(-1000, -1000, 0.2); 
+        // move(500, -500, 0.2);
+        // move(-1000, -1000, 0.2);
         
     }
     
@@ -69,5 +94,12 @@ public class OmarCompition extends LinearOpMode {
          }
          fr.setPower(0);
          
+     }
+     
+     public double PIDController(double target, double current){
+         double proportionError = target - current;
+         integral += proportionError * elapsedTime.time();
+         
+         return proportionError * kp + integral * ki;
      }
  }
