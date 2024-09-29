@@ -99,6 +99,8 @@ public class OmarCompition extends LinearOpMode {
      public double PIDController(double target, double current){
          double proportionError = target - current;
          integral += proportionError * elapsedTime.time();
+
+         elapsedTime.reset();
          
          return proportionError * kp + integral * ki;
      }
