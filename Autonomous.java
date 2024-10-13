@@ -16,7 +16,7 @@ public class OmarCompition extends LinearOpMode {
     double kp = 0.5;
     double ki = 0.5;
     double kd = 0.5;
-    double previous = 0:
+    double previous = 0;
     double integral = 0;
     
     ElapsedTime elapsedTime = new ElapsedTime();
