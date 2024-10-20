@@ -8,6 +8,7 @@ import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.robotcore.external.navigation.AngularVelocity;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import static com.qualcomm.hardware.rev.RevHubOrientationOnRobot.xyzOrientation;
 
 @Autonomous
 
@@ -29,6 +30,12 @@ public class AbubakarHassanIMU {
     IMU imu;
 
     @Override public void runOpMode() throws InterruptedException {
+
+        double xRotation = 0;
+        double yrotation = 0;
+        double zRotation = 0;
+
+        Orientation hubRotation = xyzOrientation(xRotation, yRotation, zRotation);
         
         frontleftDrive  = hardwareMap.get(DcMotor.class, "frontLeft");
         frontrightDrive = hardwareMap.get(DcMotor.class, "frontRight");
@@ -43,10 +50,10 @@ public class AbubakarHassanIMU {
 
         imu = hardwareMap.get(IMU.class, "imu");
 
-        RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.UP;
-        RevHubOrientationOnRobot.UsbFacingDirection  usbDirection  = RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
+      //  RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.UP;
+      //  RevHubOrientationOnRobot.UsbFacingDirection  usbDirection  = RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
 
-        RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(logoDirection, usbDirection);
+        RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(hubRotation);
 
 
         imu.initialize(new IMU.Parameters(orientationOnRobot));
