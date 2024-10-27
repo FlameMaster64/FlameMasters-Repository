@@ -101,4 +101,15 @@ public class AbubakarHassanIMU {
         elapsedTime.reset();
         return proportionError * kp + integral * ki + derivative * kd;
     }
-}
+
+  public double anglewrap(double radians) {
+    while (radians > 180) {
+        radians -= 360;
+      }
+   while (radians < -180) {
+        radians += 360;
+      }
+      return radians;
+  }
+
+}   
