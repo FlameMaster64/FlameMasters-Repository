@@ -1,3 +1,4 @@
+
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -41,8 +42,8 @@ public class AbubakarHassanIMU extends LinearOpMode{
         
         frontleftDrive  = hardwareMap.get(DcMotor.class, "frontLeft");
         frontrightDrive = hardwareMap.get(DcMotor.class, "frontRight");
-        backleftDrive  = hardwareMap.get(DcMotor.class, "backLeft");
-        backrightDrive  = hardwareMap.get(DcMotor.class, "backRight");
+        backleftDrive  = hardwareMap.get(DcMotor.class, "midLeft");
+        backrightDrive  = hardwareMap.get(DcMotor.class, "midRight");
         
         frontleftDrive.setDirection(DcMotor.Direction.REVERSE);
         frontrightDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -100,7 +101,7 @@ public class AbubakarHassanIMU extends LinearOpMode{
     while (degrees > 180) {
         degrees -= 360;
       }
-   while (degrees < -180) {
+  while (degrees < -180) {
         degrees += 360;
       }
       return degrees;
