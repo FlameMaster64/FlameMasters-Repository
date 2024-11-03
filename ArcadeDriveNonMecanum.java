@@ -56,7 +56,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name = "OmarArcadeMode", group = "LinearOpMode")
 
-public class OmarArcadeMode extends LinearOpMode {
+public class ArcadeDriveNonM extends LinearOpMode {
     private DcMotor frontleftDrive = null;
     private DcMotor backleftDrive = null;
     private DcMotor frontrightDrive = null;
@@ -92,12 +92,12 @@ public class OmarArcadeMode extends LinearOpMode {
             strafe =gamepad1.left_stick_x;
             turn =gamepad1.right_stick_x;
             
-            frpower = drive - turn - strafe;
-            brpower = drive - turn + strafe;
-            flpower = drive + turn + strafe;
-            blpower = drive + turn - strafe;
+            frpower = drive - turn;
+            flpower = drive + turn;
+            brpower = -turn + strafe;
+            blpower = turn + strafe;
             
-            double maxPower = Math.max(+-       Math.abs(frpower),Math.max(Math.abs(brpower),Math.max(Math.abs(flpower), Math.abs(blpower))));
+            double maxPower = Math.max(+-Math.abs(frpower),Math.max(Math.abs(brpower),Math.max(Math.abs(flpower), Math.abs(blpower))));
             if(maxPower > 1){
                 frpower /= maxPower;
                 brpower /= maxPower;
