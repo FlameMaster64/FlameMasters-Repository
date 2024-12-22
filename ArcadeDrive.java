@@ -8,26 +8,32 @@ import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
-@TeleOp(name = "OmarArcadeMode", group = "LinearOpMode")
+@TeleOp(name = "team1TeleOp", group = "LinearOpMode")
 
-public class OmarArcadeMode extends LinearOpMode {
-    private DcMotor frontleftDrive = null;
-    private DcMotor backleftDrive = null;
-    private DcMotor frontrightDrive = null;
-    private DcMotor backrightDrive = null;
+public class Team1 extends LinearOpMode {
+    private DcMotor frontleft = null;
+    private DcMotor backleft = null;
+    private DcMotor frontright = null;
+    private DcMotor backright = null;
     
 
     @Override
     public void runOpMode() {
-        frontleftDrive = hardwareMap.get(DcMotor.class, "fl");
-        frontrightDrive = hardwareMap.get(DcMotor.class, "fr");
-        backleftDrive = hardwareMap.get(DcMotor.class, "bl");
-        backrightDrive = hardwareMap.get(DcMotor.class, "br");
         
-        frontleftDrive.setDirection(DcMotor.Direction.REVERSE);
-        frontrightDrive.setDirection(DcMotor.Direction.FORWARD);
-        backleftDrive.setDirection(DcMotor.Direction.REVERSE);
-        backrightDrive.setDirection(DcMotor.Direction.FORWARD);
+        frontleft = hardwareMap.get(DcMotor.class, "fl");
+        frontright = hardwareMap.get(DcMotor.class, "fr");
+        backleft = hardwareMap.get(DcMotor.class, "bl");
+        backright = hardwareMap.get(DcMotor.class, "br");
+        
+        frontleft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backleft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backright.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        
+        frontleft.setDirection(DcMotor.Direction.REVERSE);
+        frontright.setDirection(DcMotor.Direction.FORWARD);
+        backleft.setDirection(DcMotor.Direction.REVERSE);
+        backright.setDirection(DcMotor.Direction.FORWARD);
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -55,12 +61,16 @@ public class OmarArcadeMode extends LinearOpMode {
                 blpower /= maxPower;
             }
             
-            frontrightDrive.setPower(frpower);
-            backrightDrive.setPower(brpower);
-            frontleftDrive.setPower(flpower);
-            backleftDrive.setPower(blpower);
+            frontright.setPower(frpower);
+            backright.setPower(brpower);
+            frontleft.setPower(flpower);
+            backleft.setPower(blpower);
           
             telemetry.addData("Status", "Running");
+            telemetry.addData("frpower", frpower);
+            telemetry.addData("flpower", flpower);
+            telemetry.addData("blpower", blpower);
+            telemetry.addData("brpower", brpower);
             telemetry.update();
 
         }
