@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -8,9 +10,9 @@ import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.IMU;
 
-@TeleOp(name = "team1TeleOp", group = "LinearOpMode")
+@TeleOp(name = "FieldCentricAAAAAAAAAAAAAA", group = "LinearOpMode")
 
-public class Team1 extends LinearOpMode {
+public class FieldCentricAAAAAAAAAAAAAA extends LinearOpMode {
     private DcMotor frontleft = null;
     private DcMotor backleft = null;
     private DcMotor frontright = null;
@@ -46,22 +48,32 @@ public class Team1 extends LinearOpMode {
 
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
             RevHubOrientationOnRobot.LogoFacingDirection.UP,
-            RevHubOrientationOnRobot.UsbFacingDirection.FOWARD));
+            RevHubOrientationOnRobot.UsbFacingDirection.FORWARD));
 
         imu.initialize(parameters);
+        
         
         waitForStart();
 
         while (opModeIsActive()) {
             
-            drive =-gamepad1.left_stick_y;
-            strafe =gamepad1.left_stick_x;
-            turn =gamepad1.right_stick_x;
+            if (gamepad1.options){
+                imu.resetYaw();
+            }
+        
+            double heading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
             
-            frpower = drive - turn - strafe;
-            brpower = drive - turn + strafe;
-            flpower = drive + turn + strafe;
-            blpower = drive + turn - strafe;
+            drive = -gamepad1.left_stick_y;
+            strafe = gamepad1.left_stick_x;
+            turn = gamepad1.right_stick_x;
+            
+            double newStrafe = strafe * Math.cos(-heading) - drive * Math.sin(-heading);
+            double newDrive = strafe * Math.sin(-heading) - drive * Math.cos(-heading);
+            
+            frpower = newDrive - turn - newStrafe;
+            brpower = newDrive - turn + newStrafe;
+            flpower = newDrive + turn + newStrafe;
+            blpower = newDrive + turn - newStrafe;
             
             double maxPower = Math.max(+-Math.abs(frpower),Math.max(Math.abs(brpower),Math.max(Math.abs(flpower), Math.abs(blpower))));
             if(maxPower > 1){
@@ -71,6 +83,8 @@ public class Team1 extends LinearOpMode {
                 blpower /= maxPower;
             }
             
+
+
             frontright.setPower(frpower);
             backright.setPower(brpower);
             frontleft.setPower(flpower);
