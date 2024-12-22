@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.Servo;
-
+import com.qualcomm.robotcore.hardware.IMU;
 
 @TeleOp(name = "team1TeleOp", group = "LinearOpMode")
 
@@ -16,6 +16,7 @@ public class Team1 extends LinearOpMode {
     private DcMotor frontright = null;
     private DcMotor backright = null;
     
+    IMU imu;
 
     @Override
     public void runOpMode() {
@@ -40,6 +41,15 @@ public class Team1 extends LinearOpMode {
 
         double drive, turn, strafe;
         double flpower, frpower, blpower, brpower;
+
+        imu = hardwareMap.get(IMU.class, "imu");
+
+        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
+            RevHubOrientationOnRobot.LogoFacingDirection.UP,
+            RevHubOrientationOnRobot.UsbFacingDirection.FOWARD));
+
+        imu.initialize(parameters);
+        
         waitForStart();
 
         while (opModeIsActive()) {
