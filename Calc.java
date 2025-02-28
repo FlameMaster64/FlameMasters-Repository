@@ -4,21 +4,25 @@ public class MyClass {
       
       Scanner input = new Scanner(System.in);
       
-      double num1 = input.nextDouble();
+      String compute = input.next();
       
-      String operation = input.nextLine();
-      
-      double num2 = input.nextDouble();
-      
-      System.out.println(Calc(6, "+", 4));
+      System.out.println(Calc(compute));
   
    }
       
-  public static double Calc(double num1, String operation, double num2){
+  public static double Calc(String compute){
+      
+      Scanner equation = new Scanner(compute);
+      
+      double num1 = equation.nextDouble();
+      
+      String operation = equation.next();
+      
+      double num2 = equation.nextDouble();
       
       double nothing = 0;
       
-      if(operation=="+"){
+      if(operation.equals("+")){
           double answer = num1 + num2;
           return answer;
       }
