@@ -4,9 +4,9 @@ import java.util.ArrayList;
 public class MyClass {
   public static void main(String args[]) {
       
-      Register name = new Register(10);
+      Register reg = new Register(10);
       
-      System.out.println(name.price);
+      System.out.println(reg.price);
   }
 }
 
@@ -29,7 +29,7 @@ class Register {
     
     List<Integer> getCash(double money) {
         int change = (int) (100 * getChange(money));
-        List<Integers> answers = new ArrayList<>();
+        List<Integer> answers = new ArrayList<>();
         
         /*int hundreds = change / 100;
         change %= 100;*/
@@ -41,3 +41,20 @@ class Register {
         return answers;
     }
 }
+
+class Store {
+    
+    double itemPrice;
+    
+    void itemPrices(double itemPrice) {
+        Store apple = new Store();
+        Store bread = new Store();
+        Store chips = new Store();
+        Store nintendoSwitch = new Store();
+        Store laptop = new Store();
+        apple.itemPrice = 5;
+        bread.itemPrice = 10;
+        chips.itemPrice = 5;
+        nintendoSwitch.itemPrice = 200;
+        laptop.itemPrice = 700;
+    }
